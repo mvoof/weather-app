@@ -1,0 +1,20 @@
+.error {
+	@include flex-center;
+	flex-direction: column;
+	padding: 4rem;
+
+	button {
+		margin-top: 1rem;
+		padding: 0.5rem 1rem;
+		background: $primary-color;
+		color: white;
+		border: none;
+		border-radius: 0.375rem;
+		cursor: pointer;
+		transition: background 0.3s ease;
+
+		&:hover {
+			background: $secondary-color;
+		}
+	}
+}

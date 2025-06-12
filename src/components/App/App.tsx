@@ -5,6 +5,8 @@ import useGeolocation from '../../hooks/useGeolacation';
 import { Header } from '../Header/Header';
 import { WeatherCard } from '../WeatherCard/WeatherCard';
 import { Forecast } from '../Forecast/Forecast';
+import { Loader } from '../Loader/Loader';
+import { Error } from '../Error/Error';
 import './App.scss';
 
 const App: React.FC = observer(() => {
@@ -26,17 +28,9 @@ const App: React.FC = observer(() => {
 
 				<main>
 					{weatherStore.isLoading ? (
-						<div className="loading">
-							<div className="spinner"></div>
-							<p>Loading weather data...</p>
-						</div>
+						<Loader />
 					) : weatherStore.error ? (
-						<div className="error">
-							<p>{weatherStore.error}</p>
-							<button onClick={() => window.location.reload()}>
-								Try again
-							</button>
-						</div>
+						<Error error={weatherStore.error} />
 					) : (
 						<>
 							<section className="current-weather-section">
