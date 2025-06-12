@@ -46,7 +46,7 @@
 }
 
 .current-weather {
-	background: linear-gradient(145deg, #6366f1, #8b5cf6);
+	background: linear-gradient(145deg, $secondary-color, $accent-color);
 	color: white;
 	border-radius: 1.5rem;
 	padding: 2rem;
