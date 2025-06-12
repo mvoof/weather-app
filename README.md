@@ -1,5 +1,7 @@
 # Weather App
 
+<img src="https://github.com/user-attachments/assets/1accb6f7-82ab-424e-8a06-2f660714cc9f" alt="image" width="50%" height="auto">
+
 A modern weather application built with React and TypeScript. This app allows users to search for weather information by city, view current conditions, and see a multi-day forecast. It features geolocation support, a clean UI, and responsive design.
 
 ## Features
