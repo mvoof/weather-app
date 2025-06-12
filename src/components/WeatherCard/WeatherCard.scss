@@ -28,20 +28,11 @@
 
 	.weather-details {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 0.5rem;
-		margin-top: 1rem;
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+		gap: 1rem;
+		margin-top: 1.5rem;
 		padding-top: 1rem;
-		border-top: 1px solid #e2e8f0;
-
-		.detail-item {
-			font-size: 0.875rem;
-
-			span:first-child {
-				opacity: 0.7;
-				margin-right: 0.5rem;
-			}
-		}
+		border-top: 1px solid rgba(255, 255, 255, 0.3); // тонкая светлая линия на главной карточке
 	}
 }
 

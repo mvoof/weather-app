@@ -1,6 +1,7 @@
 import React from 'react';
 import weatherStore from '@/store/weatherStore';
 import './WeatherCard.scss';
+import { WeatherDetail } from '../WeatherDetail/WeatherDetail';
 
 interface WeatherCardProps {
 	weather: any;
@@ -22,6 +23,8 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({
 
 		return '🌈';
 	};
+
+	const detailVariant = isCurrent ? 'default' : 'forecast';
 
 	return (
 		<div
@@ -64,20 +67,26 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({
 			)}
 
 			<div className="weather-details">
-				<div className="detail-item">
-					<span>💧 Humidity</span>
-					<span>{weather.main.humidity}%</span>
-				</div>
+				<WeatherDetail
+					icon="💧"
+					label="Humidity"
+					value={`${weather.main.humidity}%`}
+					variant={detailVariant}
+				/>
 
-				<div className="detail-item">
-					<span>🌬️ Wind</span>
-					<span>{Math.round(weather.wind.speed)} m/s</span>
-				</div>
+				<WeatherDetail
+					icon="🌬️"
+					label="Wind"
+					value={`${Math.round(weather.wind.speed)} m/s`}
+					variant={detailVariant}
+				/>
 
-				<div className="detail-item">
-					<span>🔽 Pressure</span>
-					<span>{weather.main.pressure} hPa</span>
-				</div>
+				<WeatherDetail
+					icon="🔽"
+					label="Pressure"
+					value={`${weather.main.pressure} hPa`}
+					variant={detailVariant}
+				/>
 			</div>
 		</div>
 	);
