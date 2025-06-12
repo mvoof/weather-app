@@ -40,7 +40,15 @@ module.exports = {
 					MiniCssExtractPlugin.loader,
 					'css-loader',
 					'postcss-loader',
-					'sass-loader',
+					{
+						loader: 'sass-loader',
+						options: {
+							additionalData: `
+            		    		@import "src/scss/_variables.scss";
+            		    		@import "src/scss/_mixins.scss";
+            		  `,
+						},
+					},
 				],
 			},
 			{
