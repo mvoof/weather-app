@@ -1,10 +1,12 @@
 import React from 'react';
-import weatherStore from '@/store/weatherStore';
-import './WeatherCard.scss';
+import { weatherStore } from '@/store/weatherStore';
 import { WeatherDetail } from '../WeatherDetail/WeatherDetail';
+import { ForecastDay, WeatherResponse } from '@/types';
+
+import './WeatherCard.scss';
 
 interface WeatherCardProps {
-	weather: any;
+	weather: WeatherResponse | ForecastDay;
 	isCurrent?: boolean;
 }
 

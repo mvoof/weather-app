@@ -1,6 +1,7 @@
 import React from 'react';
-import './Header.scss';
 import { SearchBar } from '../SearchBar/SearchBar';
+
+import './Header.scss';
 
 export const Header: React.FC = () => {
 	return (

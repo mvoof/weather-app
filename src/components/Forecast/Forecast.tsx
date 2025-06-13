@@ -1,10 +1,11 @@
 import React from 'react';
 import { WeatherCard } from '../WeatherCard/WeatherCard';
+import { ForecastDay } from '@/types';
 
 import './Forecast.scss';
 
 interface ForecastProps {
-	forecast: any[];
+	forecast: ForecastDay[];
 }
 
 export const Forecast: React.FC<ForecastProps> = ({ forecast }) => {

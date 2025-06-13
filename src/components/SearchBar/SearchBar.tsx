@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import weatherStore from '@/store/weatherStore';
+import { weatherStore } from '@/store/weatherStore';
+
 import './SearchBar.scss';
 
 export const SearchBar: React.FC = () => {
@@ -10,7 +11,7 @@ export const SearchBar: React.FC = () => {
 		e.preventDefault();
 
 		if (searchTerm.trim()) {
-			weatherStore.getWeatherByCity(searchTerm.trim());
+			weatherStore.loadWeather('city', searchTerm.trim());
 		}
 
 		setSearchTerm('');
