@@ -1,15 +1,10 @@
 .weather-detail {
-  align-items: center;
-  padding: 0.75rem 1rem;
-  border-radius: 12px;
-  font-size: 0.9rem;
-
   &__icon {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--primary-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,42 +19,39 @@
 
   .label {
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--label-color);
     text-transform: uppercase;
   }
 
   .value {
     font-weight: 600;
-    color: white;
+    color: var(--text-color);
     font-size: 0.95rem;
   }
+}
 
-  &--main {
-    display: flex;
-    justify-content: center;
+.weather-detail--main {
+  display: flex;
+  justify-content: center;
+}
+
+.weather-detail--forecast {
+  display: flex;
+  background: var(--card-bg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+  padding: 0.5rem;
+  border-radius: 10%;
+
+  &:hover {
+    transform: translateY(-3px);
   }
 
-  &--forecast {
-    display: flex;
-    background: white;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease;
+  .label {
+    color: var(--label-color);
+  }
 
-    &:hover {
-      transform: translateY(-3px);
-    }
-
-    .weather-detail__icon {
-      background: rgba(79, 70, 229, 0.1);
-      color: #4f46e5;
-    }
-
-    .label {
-      color: #94a3b8;
-    }
-
-    .value {
-      color: #1e293b;
-    }
+  .value {
+    color: var(--text-color);
   }
 }

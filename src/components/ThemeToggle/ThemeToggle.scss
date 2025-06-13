@@ -1,0 +1,14 @@
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--primary-color);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: var(--card-bg);
+    color: var(--primary-color);
+  }
+}

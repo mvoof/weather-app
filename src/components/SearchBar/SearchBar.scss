@@ -14,7 +14,7 @@
   }
 
   button {
-    background: $primary-color;
+    background: var(--primary-color);
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -22,7 +22,7 @@
     transition: background 0.3s ease;
 
     &:hover {
-      background: $secondary-color;
+      background: var(--secondary-color);
     }
   }
 }

@@ -4,3 +4,32 @@
 @import '../components/WeatherCard/WeatherCard.scss';
 @import '../components/Forecast/Forecast.scss';
 @import '../components/Loader/Loader.scss';
+
+@import './normalize';
+
+[data-theme='light'] {
+  --background-color: #f8fafc;
+  --primary-color: #4f46e5;
+  --secondary-color: #6366f1;
+  --accent-color: #8b5cf6;
+  --text-color: #1e293b;
+  --card-bg: #ffffff;
+  --border-color: #e2e8f0;
+  --label-color: #94a3b8;
+}
+
+[data-theme='dark'] {
+  --background-color: #1e293b;
+  --primary-color: #4852b4;
+  --secondary-color: #6b49d1;
+  --accent-color: #513e8b;
+  --text-color: #f1f5f9;
+  --card-bg: #24385c;
+  --border-color: #475569;
+  --label-color: #94a3b8;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}

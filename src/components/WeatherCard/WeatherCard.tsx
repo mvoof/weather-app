@@ -30,7 +30,7 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({
 
   return (
     <div
-      className={`weather-card ${isCurrent ? 'current-weather' : 'forecast-weather'}`}
+      className={`${isCurrent ? 'current-weather' : 'forecast-weather'}`}
     >
       {isCurrent && (
         <div className="current-location">
