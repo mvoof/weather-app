@@ -1,13 +1,13 @@
 .forecast-section {
-	h2 {
-		font-size: 1.875rem;
-		margin-bottom: 2rem;
-		color: $primary-color;
-	}
+  h2 {
+    font-size: 1.875rem;
+    margin-bottom: 2rem;
+    color: $primary-color;
+  }
 
-	.forecast-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: 1.5rem;
-	}
+  .forecast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
 }
