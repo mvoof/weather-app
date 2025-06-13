@@ -1,25 +1,34 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import weatherStore from '../../store/weatherStore';
 import useGeolocation from '../../hooks/useGeolacation';
+import { weatherStore } from '../../store/weatherStore';
 import { Header } from '../Header/Header';
 import { WeatherCard } from '../WeatherCard/WeatherCard';
 import { Forecast } from '../Forecast/Forecast';
 import { Loader } from '../Loader/Loader';
 import { Error } from '../Error/Error';
+
 import './App.scss';
 
 const App: React.FC = observer(() => {
 	const { location } = useGeolocation();
-	console.log(location);
 
 	useEffect(() => {
-		if (location && !weatherStore.currentWeather) {
-			weatherStore.getWeatherByCoords(location.latitude, location.longitude);
-		} else {
-			weatherStore.getWeatherByCity('Moscow');
+		if (location && !weatherStore.state.currentWeather) {
+			weatherStore.loadWeather('coords', {
+				lat: location.latitude,
+				lon: location.longitude,
+			});
 		}
 	}, [location]);
+
+	useEffect(() => {
+		weatherStore.startAutoRefresh(10 * 60 * 1000);
+
+		return () => {
+			weatherStore.stopAutoRefresh();
+		};
+	}, []);
 
 	return (
 		<div className="app">

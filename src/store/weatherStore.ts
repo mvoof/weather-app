@@ -1,106 +1,110 @@
 import { makeAutoObservable } from 'mobx';
+import { CONFIG } from '../services/config';
+import { WeatherService } from '../services/weatherService';
+import {
+	WeatherResponse,
+	ForecastDay,
+	WeatherRequestType,
+	WeatherState,
+} from '@/types';
 
-export class WeatherStore {
-	currentWeather: any = null;
-	forecast: any[] = [];
-	isLoading: boolean = false;
-	error: string | null = null;
-	city: string = '';
+class WeatherStore {
+	private service: WeatherService;
 
-	private apiKey: string;
+	state: WeatherState = {
+		currentWeather: null,
+		forecastList: [],
+		isLoading: false,
+		error: null,
+		city: '',
+	};
+
+	autoRefreshInterval: number | null = null;
 
 	constructor() {
 		makeAutoObservable(this);
-		this.apiKey = process.env.OPENWEATHER_API_KEY || '';
+		this.service = new WeatherService(CONFIG.API_KEY);
 	}
 
-	async getWeatherByCoords(lat: number, lon: number) {
-		this.isLoading = true;
-		this.error = null;
+	setState(update: Partial<WeatherState>) {
+		this.state = { ...this.state, ...update };
+	}
+
+	get isLoading(): boolean {
+		return this.state.isLoading;
+	}
+
+	get error(): string | null {
+		return this.state.error;
+	}
+
+	get currentWeather(): WeatherResponse | null {
+		return this.state.currentWeather;
+	}
+
+	get forecast(): ForecastDay[] {
+		return this.state.forecastList ?? [];
+	}
+
+	get city(): string {
+		return this.state.city;
+	}
+
+	async loadWeather(
+		type: WeatherRequestType,
+		payload: string | { lat: number; lon: number }
+	) {
+		this.setState({ isLoading: true, error: null });
+
+		let result: {
+			current: WeatherResponse;
+			forecastList: ForecastDay[];
+		} | null = null;
 
 		try {
-			const currentResponse = await fetch(
-				`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=metric`
-			);
-
-			if (!currentResponse.ok) {
-				throw new Error('Failed to fetch current weather');
+			if (type === 'city') {
+				result = await this.service.fetchByCity(payload as string);
+				this.setState({ city: result?.current.name || '' });
+			} else if (type === 'coords') {
+				const { lat, lon } = payload as { lat: number; lon: number };
+				result = await this.service.fetchByCoords(lat, lon);
+				this.setState({ city: result?.current.name || '' });
 			}
 
-			const currentData = await currentResponse.json();
-			this.currentWeather = currentData;
-			this.city = currentData.name;
-
-			const forecastResponse = await fetch(
-				`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=metric`
-			);
-
-			if (!forecastResponse.ok) {
-				throw new Error('Failed to fetch forecast');
+			if (result) {
+				this.setState({
+					currentWeather: result.current,
+					forecastList: result.forecastList, // сохраняем только list
+				});
 			}
-
-			const forecastData = await forecastResponse.json();
-			this.forecast = this.processForecast(forecastData.list);
 		} catch (err: any) {
-			this.error = err.message;
+			this.setState({ error: err.message });
 		} finally {
-			this.isLoading = false;
+			this.setState({ isLoading: false });
 		}
 	}
 
-	async getWeatherByCity(city: string) {
-		this.isLoading = true;
-		this.error = null;
-
-		try {
-			const currentResponse = await fetch(
-				`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.apiKey}&units=metric`
-			);
-
-			if (!currentResponse.ok) {
-				throw new Error('Failed to fetch current weather');
-			}
-
-			const currentData = await currentResponse.json();
-			this.currentWeather = currentData;
-			this.city = currentData.name;
-
-			const forecastResponse = await fetch(
-				`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${this.apiKey}&units=metric`
-			);
-
-			if (!forecastResponse.ok) {
-				throw new Error('Failed to fetch forecast');
-			}
-
-			const forecastData = await forecastResponse.json();
-			this.forecast = this.processForecast(forecastData.list);
-		} catch (err: any) {
-			this.error = err.message;
-		} finally {
-			this.isLoading = false;
+	startAutoRefresh(intervalMs = CONFIG.CACHE_TTL_MS) {
+		if (this.autoRefreshInterval) {
+			window.clearInterval(this.autoRefreshInterval);
 		}
+
+		this.autoRefreshInterval = window.setInterval(() => {
+			if (this.state.city) {
+				this.loadWeather('city', this.state.city);
+			} else if (this.state.currentWeather?.coord) {
+				const { lat, lon } = this.state.currentWeather.coord;
+				this.loadWeather('coords', { lat, lon });
+			}
+		}, intervalMs);
 	}
 
-	private processForecast(list: any[]) {
-		// Group forecasts by day and take the first forecast of each day
-		const daysMap = new Map();
-
-		for (const item of list) {
-			const date = new Date(item.dt * 1000);
-			const day = date.getDate();
-
-			if (!daysMap.has(day)) {
-				daysMap.set(day, item);
-			}
-
-			if (daysMap.size >= 5) break;
+	stopAutoRefresh() {
+		if (this.autoRefreshInterval) {
+			window.clearInterval(this.autoRefreshInterval);
+			this.autoRefreshInterval = null;
 		}
-
-		return Array.from(daysMap.values());
 	}
 }
 
-const weatherStore = new WeatherStore();
-
-export default weatherStore;
+export const weatherStore = new WeatherStore();
