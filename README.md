@@ -38,6 +38,11 @@ A modern weather application built with React and TypeScript. This app allows us
    # or
    yarn install
    ```
+3. Create .env file and add into it your OpenWeather API key:
+   ```bash
+   touch .env
+   echo OPENWEATHER_API_KEY=YOUR_API_KEY >> .env
+   ```
 
 ### Running the App
 
