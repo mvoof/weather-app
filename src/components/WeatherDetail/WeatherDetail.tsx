@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './WeatherDetail.scss';
+import styles from './WeatherDetail.module.scss';
 
 interface WeatherDetailProps {
   icon: string;
@@ -17,13 +17,13 @@ export const WeatherDetail: React.FC<WeatherDetailProps> = ({
 }) => {
   return (
     <div
-      className={`weather-detail ${variant === 'forecast' ? 'weather-detail--forecast' : 'weather-detail--main'}`}
+      className={`${styles.weatherDetail} ${variant === 'forecast' ? styles.weatherForecast : styles.weatherMain}`}
     >
-      <div className="weather-detail__icon">{icon}</div>
+      <div className={styles.weatherDetailIcon}>{icon}</div>
 
-      <div className="weather-detail__info">
-        <span className="label">{label}</span>
-        <span className="value">{value}</span>
+      <div className={styles.weatherInfo}>
+        <span className={styles.label}>{label}</span>
+        <span className={styles.value}>{value}</span>
       </div>
     </div>
   );

@@ -1,9 +1,9 @@
 import React from 'react';
-import { weatherStore } from '@/store/weatherStore';
 import { WeatherDetail } from '../WeatherDetail/WeatherDetail';
+import { weatherStore } from '@/store/weatherStore';
 import { ForecastDay, WeatherResponse } from '@/types';
 
-import './WeatherCard.scss';
+import styles from './WeatherCard.module.scss';
 
 interface WeatherCardProps {
   weather: WeatherResponse | ForecastDay;
@@ -12,7 +12,7 @@ interface WeatherCardProps {
 
 export const WeatherCard: React.FC<WeatherCardProps> = ({
   weather,
-  isCurrent = false,
+  isCurrent,
 }) => {
   const getIcon = (weatherId: number) => {
     if (weatherId < 300) return '🌩️';
@@ -22,18 +22,15 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({
     if (weatherId < 800) return '🌫️';
     if (weatherId === 800) return '☀️';
     if (weatherId < 805) return '☁️';
-
     return '🌈';
   };
 
   const detailVariant = isCurrent ? 'default' : 'forecast';
 
   return (
-    <div
-      className={`${isCurrent ? 'current-weather' : 'forecast-weather'}`}
-    >
+    <div className={isCurrent ? styles.currentWeather : styles.forecastWeather}>
       {isCurrent && (
-        <div className="current-location">
+        <div className={styles.currentLocation}>
           <h2>{weatherStore.city}</h2>
 
           <p>
@@ -47,19 +44,22 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({
         </div>
       )}
 
-      <div className="weather-icon">{getIcon(weather.weather[0].id)}</div>
+      <div className={styles.weatherIcon}>{getIcon(weather.weather[0].id)}</div>
 
-      <div className="temperature">
-        <span className="temp-value">{Math.round(weather.main.temp)}</span>
-        <span className="temp-unit">°C</span>
+      <div className={styles.temperature}>
+        <span className={styles.tempValue}>
+          {Math.round(weather.main.temp)}
+        </span>
+        
+        <span className={styles.tempUnit}>°C</span>
       </div>
 
-      <div className="weather-description">
+      <div className={styles.weatherDescription}>
         <h3>{weather.weather[0].description}</h3>
       </div>
 
       {!isCurrent && (
-        <div className="forecast-date">
+        <div className={styles.forecastDate}>
           {new Date(weather.dt * 1000).toLocaleDateString('en-US', {
             weekday: 'short',
             day: 'numeric',
@@ -68,7 +68,7 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({
         </div>
       )}
 
-      <div className="weather-details">
+      <div className={styles.weatherDetails}>
         <WeatherDetail
           icon="💧"
           label="Humidity"

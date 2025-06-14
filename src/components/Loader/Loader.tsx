@@ -1,12 +1,13 @@
 import React from 'react';
 
-import './Loader.scss';
+import styles from './Loader.module.scss';
 
 export const Loader: React.FC = () => {
   return (
-    <div className="loading">
-      <div className="spinner"></div>
-      <p>Loading weather data...</p>
+    <div className={styles.loading}>
+      <div className={styles.spinner}></div>
+
+      <p className={styles.loadingText}>Loading weather data...</p>
     </div>
   );
 };

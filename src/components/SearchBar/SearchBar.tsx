@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { weatherStore } from '@/store/weatherStore';
 
-import './SearchBar.scss';
+import styles from './SearchBar.module.scss';
 
 export const SearchBar: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -18,7 +18,7 @@ export const SearchBar: React.FC = () => {
   };
 
   return (
-    <form className="search-form" onSubmit={handleSearch}>
+    <form className={styles.searchForm} onSubmit={handleSearch}>
       <input
         type="text"
         placeholder="Enter city name..."

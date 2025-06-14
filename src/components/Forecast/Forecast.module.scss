@@ -1,0 +1,13 @@
+.forecastSection {
+  h2 {
+    font-size: 1.875rem;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+  }
+}
+
+.forecastGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}

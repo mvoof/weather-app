@@ -2,7 +2,7 @@ import React from 'react';
 import { WeatherCard } from '../WeatherCard/WeatherCard';
 import { ForecastDay } from '@/types';
 
-import './Forecast.scss';
+import styles from './Forecast.module.scss';
 
 interface ForecastProps {
   forecast: ForecastDay[];
@@ -10,10 +10,10 @@ interface ForecastProps {
 
 export const Forecast: React.FC<ForecastProps> = ({ forecast }) => {
   return (
-    <section className="forecast-section">
+    <section className={styles.forecastSection}>
       <h2>5-Day Forecast</h2>
 
-      <div className="forecast-grid">
+      <div className={styles.forecastGrid}>
         {forecast.map((day, index) => (
           <WeatherCard key={index} weather={day} />
         ))}

@@ -8,7 +8,7 @@ import { Forecast } from '../Forecast/Forecast';
 import { Loader } from '../Loader/Loader';
 import { Error } from '../Error/Error';
 
-import './App.scss';
+import styles from './App.module.scss';
 
 const App: React.FC = observer(() => {
   const { location } = useGeolocation();
@@ -31,8 +31,8 @@ const App: React.FC = observer(() => {
   }, []);
 
   return (
-    <div className="app">
-      <div className="container">
+    <div className={styles.app}>
+      <div className={styles.container}>
         <Header />
 
         <main>
@@ -42,7 +42,7 @@ const App: React.FC = observer(() => {
             <Error error={weatherStore.error} />
           ) : (
             <>
-              <section className="current-weather-section">
+              <section className={styles.currentWeather}>
                 {weatherStore.currentWeather && (
                   <WeatherCard
                     weather={weatherStore.currentWeather}
@@ -56,7 +56,7 @@ const App: React.FC = observer(() => {
           )}
         </main>
 
-        <footer>
+        <footer className={styles.footer}>
           <p>Powered by OpenWeatherMap</p>
         </footer>
       </div>
