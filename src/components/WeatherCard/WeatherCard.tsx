@@ -50,7 +50,7 @@ export const WeatherCard: React.FC<WeatherCardProps> = ({
         <span className={styles.tempValue}>
           {Math.round(weather.main.temp)}
         </span>
-        
+
         <span className={styles.tempUnit}>°C</span>
       </div>
 
