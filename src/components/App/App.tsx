@@ -11,7 +11,7 @@ import { Error } from '../Error/Error';
 import styles from './App.module.scss';
 
 const App: React.FC = observer(() => {
-  const { location } = useGeolocation();
+  const { location, error } = useGeolocation();
 
   useEffect(() => {
     if (location && !weatherStore.state.currentWeather) {
@@ -30,6 +30,8 @@ const App: React.FC = observer(() => {
     };
   }, []);
 
+  const isError = error || weatherStore.error;
+
   return (
     <div className={styles.app}>
       <div className={styles.container}>
@@ -38,8 +40,8 @@ const App: React.FC = observer(() => {
         <main>
           {weatherStore.isLoading ? (
             <Loader />
-          ) : weatherStore.error ? (
-            <Error error={weatherStore.error} />
+          ) : isError ? (
+            <Error error={error || weatherStore.error} />
           ) : (
             <>
               <section className={styles.currentWeather}>
