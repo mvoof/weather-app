@@ -12,7 +12,7 @@ export class WeatherService {
     string,
     { data: WeatherDataWithList; timestamp: number }
   >();
-  private readonly cacheTTL = 10 * 60 * 1000;
+  private readonly cacheTTL = CONFIG.CACHE_TTL_MS;
 
   constructor(private readonly apiKey: string) {}
 
@@ -115,8 +115,6 @@ export class WeatherService {
       throw err;
     }
   }
-
-  // Вспомогательные методы
 
   private buildCacheKey(
     type: 'city' | 'coords',

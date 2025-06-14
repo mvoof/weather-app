@@ -74,7 +74,7 @@ class WeatherStore {
       if (result) {
         this.setState({
           currentWeather: result.current,
-          forecastList: result.forecastList, // сохраняем только list
+          forecastList: result.forecastList,
         });
       }
     } catch (err: any) {
